@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block main %}
+    <script src="{% static "js/index.js" %}"></script>
+
+    <div class="header">
+        <div class="header__middle">
+            <div class="header__text">投明</div>
+        </div>
+        <div class="header__right">
+            <a href="/writer"><div class="header__btn">发布</div></a>
+        </div>
+    </div>
+
+    <div class="index-box" id="index-box"></div>
+
+    <div class="footer">
+        <div class="footer__middle">
+            <div class="footer__middle__text">10个投明</div>
+        </div>
+    </div>
+
+     <script>
+        let indexComponent = new IndexComponent({indexBoxId: 'index-box'});
+     </script>
+{% endblock %}

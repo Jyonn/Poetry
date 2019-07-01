@@ -1,0 +1,165 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+a {
+  text-decoration: none;
+}
+input,
+textarea,
+div {
+  outline: none;
+  border: none;
+  background: none;
+  resize: none;
+}
+body {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+body div.header,
+body div.footer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+}
+body div.header div.header__text,
+body div.header div.header__btn,
+body div.footer div.footer__text,
+body div.footer div.footer__middle div.footer__middle__text,
+body div.footer div.footer__btn {
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 0 0 3px #cccccc;
+}
+body div.header div.header__btn,
+body div.footer div.footer__btn {
+  cursor: pointer;
+}
+body div.header div.header__left,
+body div.header div.header__right,
+body div.footer div.footer__right {
+  position: absolute;
+  height: 50px;
+  left: 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+body div.header div.header__right,
+body div.footer div.footer__right {
+  left: unset;
+  right: 0;
+}
+body div.header div.header__middle,
+body div.footer div.footer__middle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+}
+body div.footer {
+  top: unset;
+  bottom: 0;
+  height: 40px;
+}
+body div.footer div.footer__middle {
+  height: 40px;
+}
+body div.footer div.footer__middle div.footer__middle__text {
+  font-size: 12px;
+  font-weight: normal;
+}
+body div.footer div.footer__right {
+  height: 40px;
+}
+body div.write-box {
+  position: fixed;
+  width: 100%;
+  height: calc(100% - 50px);
+  left: 0;
+  top: 50px;
+  padding: 0 20px 20px;
+}
+body div.write-box div.write-box__title {
+  font-size: 20px;
+  font-weight: bold;
+  overflow-y: scroll;
+  height: 30px;
+}
+body div.write-box div.write-box__content {
+  margin-top: 10px;
+  font-size: 16px;
+  height: calc(100% - 30px - 10px);
+  overflow-y: scroll;
+}
+body div.index-box {
+  position: fixed;
+  width: 100%;
+  height: calc(100% - 50px - 40px);
+  left: 0;
+  top: 50px;
+  padding-left: 30px;
+  overflow-y: scroll;
+}
+body div.index-box a:first-child div.index-box__item-box {
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: #dddddd;
+}
+body div.index-box div.index-box__item-box {
+  position: relative;
+  height: 55px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #dddddd;
+}
+body div.index-box div.index-box__item-box div.index-box__title {
+  font-size: 15px;
+  font-weight: bold;
+  padding-top: 7px;
+  max-width: calc(100% - 10px);
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 3px #cccccc;
+}
+body div.index-box div.index-box__item-box div.index-box__time {
+  font-size: 13px;
+}
+body.day {
+  background-color: #f8f8f8;
+}
+body.day div.header div.header__text,
+body.day div.footer div.footer__text {
+  color: #000000;
+}
+body.day div.header div.header__btn,
+body.day div.footer div.footer__btn {
+  color: #eeaa33;
+}
+body.day div.write-box div.write-box__title {
+  color: #444444;
+}
+body.day div.write-box div.write-box__content {
+  color: #484848;
+}
+body.day div.index-box div.index-box__title {
+  color: #333333;
+}
+body.day div.index-box div.index-box__time {
+  color: #999999;
+}
+/*# sourceMappingURL=main.css.map */
