@@ -28,8 +28,8 @@ class Time {
     getTwelveTime() {
         let hours = this.time.getHours();
         let twelveHours = (hours < 12) ? hours : hours - 12;
-        if (hours === 0) {
-            hours = 12;
+        if (twelveHours === 0) {
+            twelveHours = 12;
         }
         return `${hours < 12 ? '上午' : '下午'}${Time.addZero(twelveHours)}:${Time.addZero(this.time.getMinutes())}`
     }

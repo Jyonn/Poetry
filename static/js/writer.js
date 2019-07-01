@@ -33,25 +33,18 @@ class WriterComponent {
     }
 
     publish() {
-        if (this.readOnly) {
-            return;
-        }
         const title = this.title.innerText;
         const content = this.content.innerText;
-        Request.post('/api/poem', {title: title, content: content})
+        console.log(content.length);
+        if (content.length === 0) {
+            alert('字数过少');
+            return;
+        }
+        Request.post('/api/poem/', {title: title, content: content})
             .then(resp => {
                 this.title.innerText = '';
                 this.content.innerText = '';
                 window.location.href = '/';
             });
     }
-
-    // sizeChanger() {
-    //     console.log('changing');
-    //     if (this.title.innerText.length <= 12) {
-    //         this.title.style.fontSize = '30px';
-    //     } else {
-    //         this.title.style.fontSize = '20px';
-    //     }
-    // }
 }

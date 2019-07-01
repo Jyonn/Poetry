@@ -75,6 +75,11 @@ body div.footer {
   bottom: 0;
   height: 40px;
 }
+body div.footer div.footer__btn [class^="icon-"],
+body div.footer div.footer__btn [class*=" icon-"] {
+  font-size: 24px;
+  font-weight: bold;
+}
 body div.footer div.footer__middle {
   height: 40px;
 }
@@ -148,6 +153,9 @@ body.day div.footer div.footer__text {
 }
 body.day div.header div.header__btn,
 body.day div.footer div.footer__btn {
+  color: #eeaa33;
+}
+body.day div.footer div.footer__btn img.img-btn {
   color: #eeaa33;
 }
 body.day div.write-box div.write-box__title {

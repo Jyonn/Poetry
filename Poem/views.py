@@ -7,7 +7,7 @@ from Poem.models import PM_CONTENT, PM_TITLE, Poem
 
 
 PM_LAST = Param('last').process(int).process(lambda v: v if v else Poem.objects.count() + 1)
-PM_COUNT = Param('count').process(int).process(lambda v: min(max(v, 1), 10))
+PM_COUNT = Param('count').process(int).process(lambda v: min(max(v, 1), 15))
 
 
 class PoemIDView(View):

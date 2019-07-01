@@ -79,6 +79,10 @@ body {
         }
         div.footer__btn {
             &:extend(body div.header div.header__btn);
+            [class^="icon-"], [class*=" icon-"] {
+                font-size: 24px;
+                font-weight: bold;
+            }
         }
 
         div.footer__middle {
@@ -182,6 +186,9 @@ body.day {
 
         div.footer__btn {
             &:extend(body.day div.header div.header__btn);
+            img.img-btn {
+                color: #eeaa33;
+            }
         }
     }
 

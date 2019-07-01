@@ -19,7 +19,7 @@ from Poetry.views import WriterView, IndexView
 
 urlpatterns = [
     path('', IndexView.as_view()),
-    path('writer', WriterView.as_view()),
+    path('writer', WriterView.as_view(), name="write-poem"),
     path('writer/@<str:poem_id>', WriterView.as_view()),
-    path('api', include('Poetry.api_urls')),
+    path('api/', include('Poetry.api_urls')),
 ]
