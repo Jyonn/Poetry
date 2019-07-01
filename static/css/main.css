@@ -17,7 +17,8 @@ div {
 }
 .smooth,
 body,
-body div.page {
+body div.page,
+body div.index-box div.index-box__item-box {
   transition: 0.5s;
 }
 body {
@@ -26,7 +27,7 @@ body {
   height: 100vh;
 }
 body div.page {
-  position: fixed;
+  position: absolute;
   width: 100vw;
   height: 100vh;
 }

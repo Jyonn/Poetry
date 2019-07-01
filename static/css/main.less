@@ -31,7 +31,7 @@ body {
 
     div.page {
         &:extend(.smooth);
-        position: fixed;
+        position: absolute;
         width: 100vw;
         height: 100vh;
     }
@@ -161,6 +161,7 @@ body {
         }
 
         div.index-box__item-box {
+            &:extend(.smooth);
             position: relative;
             height: @item-box-height;
             border-bottom-width: 1px;

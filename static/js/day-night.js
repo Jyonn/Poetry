@@ -4,6 +4,10 @@ class DayNight {
         this.appName = document.getElementById(appNameId);
         this.footText = document.getElementById(footTextId);
         this.is_day = true;
+
+        if (Store.load('dayNight') === 'night') {
+            this.night();
+        }
     }
 
     toggle() {
@@ -20,6 +24,7 @@ class DayNight {
         this.is_day = true;
         this.appName.innerText = '投明';
         this.footText.innerText = '暗';
+        Store.save('dayNight', 'day');
     }
 
     night() {
@@ -28,5 +33,6 @@ class DayNight {
         this.is_day = false;
         this.appName.innerText = '投暗';
         this.footText.innerText = '明';
+        Store.save('dayNight', 'night');
     }
 }
