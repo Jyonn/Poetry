@@ -137,14 +137,12 @@ body div.index-box {
 body div.index-box a:first-child div.index-box__item-box {
   border-top-width: 1px;
   border-top-style: solid;
-  border-top-color: #dddddd;
 }
 body div.index-box div.index-box__item-box {
   position: relative;
   height: 55px;
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  border-bottom-color: #dddddd;
 }
 body div.index-box div.index-box__item-box div.index-box__title {
   font-size: 15px;
@@ -183,6 +181,10 @@ body.day div.index-box div.index-box__title {
 body.day div.index-box div.index-box__time {
   color: #999999;
 }
+body.day div.index-box div.index-box__item-box {
+  border-top-color: #dddddd;
+  border-bottom-color: #dddddd;
+}
 body.night {
   background-color: #222222;
 }
@@ -207,5 +209,9 @@ body.night div.index-box div.index-box__title {
 }
 body.night div.index-box div.index-box__time {
   color: #999999;
+}
+body.night div.index-box div.index-box__item-box {
+  border-top-color: #333333;
+  border-bottom-color: #333333;
 }
 /*# sourceMappingURL=main.css.map */
