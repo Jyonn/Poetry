@@ -10,7 +10,7 @@ class Method {
 class ErrorHandler {
     static handler(error) {
         console.error(error);
-        return Promise.reject(error);
+        // return Promise.reject(error);
     }
 }
 
@@ -50,6 +50,7 @@ class Request {
         return req.json().then((resp) => {
             if (resp.code !== 0) {
                 // InfoCenter.push(new Info(resp.msg));
+                alert(resp.msg);
                 return ErrorHandler.handler(resp);
             }
             return resp.body;

@@ -1,34 +1,83 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block main %}
+    <script src="{% static "js/day-night.js" %}"></script>
+    <script src="{% static "js/pageArranger.js" %}"></script>
+    <script src="{% static "js/pager.js" %}"></script>
     <script src="{% static "js/index.js" %}"></script>
+    <script src="{% static "js/writer.js" %}"></script>
 
-    <div class="header">
-        <div class="header__middle">
-            <div class="header__text">投明</div>
+    <div class="page" id="index-page">
+        <div class="header">
+            <div class="header__middle">
+                <div class="header__text" id="app-name" onclick="dayNight.toggle()">投明</div>
+            </div>
         </div>
-{#        <div class="header__right">#}
-{#            <a href="{% url 'write-poem' %}"><div class="header__btn">发布</div></a>#}
-{#        </div>#}
+
+        <div class="index-box" id="index-box"></div>
+
+        <div class="footer">
+            <div class="footer__middle">
+                <div class="footer__middle__text footer__text" onclick="dayNight.toggle()">
+                    <span id="poem-count"></span>篇弃了<span id="foot-text">暗</span>
+                </div>
+            </div>
+            <div class="footer__right">
+                <div class="footer__btn" onclick="writerComponent.write(); pageArranger.writer();">
+                    <span class="icon-ios-compose-outline"></span>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="index-box" id="index-box"></div>
-
-    <div class="footer">
-        <div class="footer__middle">
-            <div class="footer__middle__text"><span id="poem-count"></span>篇弃了暗</div>
+    <div class="page" id="writer-page">
+        <div class="header">
+            <div class="header__left">
+                <div class="header__btn" onclick="pageArranger.index()">返回</div>
+            </div>
+            <div class="header__right">
+                <div class="header__btn" id="publish">完成</div>
+            </div>
         </div>
-        <div class="footer__right">
-            <a href="{% url 'write-poem' %}">
-                <div class="footer__btn"><span class="icon-ios-compose-outline"></span></div>
-            </a>
+        <div class="write-box">
+            <div class="write-box__title" contenteditable="true" id="title"></div>
+            <div class="write-box__content" contenteditable="true" id="content"></div>
         </div>
     </div>
 
-     <script>
+    <script>
+        let dayNight = new DayNight({
+            appNameId: 'app-name',
+            footTextId: 'foot-text',
+        });
+
+        let pageArranger = new PageArranger({
+            indexPageId: 'index-page',
+            writerPageId: 'writer-page',
+        });
+
         let indexComponent = new IndexComponent({
             indexBoxId: 'index-box',
             poemCountId: 'poem-count',
         });
-     </script>
+
+        let writerComponent = new WriterComponent({
+            appNameId: 'app-name',
+            titleId: 'title',
+            contentId: 'content',
+            publishId: 'publish',
+        });
+
+        let pathname = location.pathname;
+        if (pathname.startsWith('/writer')) {
+            if (pathname.length === 7) {
+                writerComponent.write();
+            } else {
+                writerComponent.read(pathname.substr(8));
+            }
+            pageArranger.writer();
+        } else {
+            pageArranger.index();
+        }
+    </script>
 {% endblock %}

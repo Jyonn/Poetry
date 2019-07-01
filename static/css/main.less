@@ -16,16 +16,36 @@ input, textarea, div {
   resize: none;
 }
 
+.smooth {
+    transition: 0.5s;
+}
+
 @header-height: 50px;
 @footer-height: 40px;
 
 body {
+    &:extend(.smooth);
     position: fixed;
     width: 100vw;
     height: 100vh;
 
-    div.header {
+    div.page {
+        &:extend(.smooth);
         position: fixed;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #index-page {
+        left: 0;
+    }
+
+    #writer-page {
+        left: 100vw;
+    }
+
+    div.header {
+        position: absolute;
         top: 0;
         left: 0;
         width: 100%;
@@ -34,7 +54,6 @@ body {
         div.header__text {
             font-size: 16px;
             font-weight: bold;
-            text-shadow: 0 0 3px #cccccc;
         }
         div.header__btn {
             &:extend(body div.header div.header__text);
@@ -102,7 +121,7 @@ body {
     }
 
     div.write-box {
-        position: fixed;
+        position: absolute;
         width: 100%;
         height: calc(~'100% - @{header-height}');
         left: 0;
@@ -125,7 +144,7 @@ body {
     }
 
     div.index-box {
-        position: fixed;
+        position: absolute;
         width: 100%;
         height: calc(~'100% - @{header-height} - @{footer-height}');
         left: 0;
@@ -157,7 +176,6 @@ body {
                 overflow-x: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
-                text-shadow: 0 0 3px #cccccc;
             }
 
             div.index-box__time {
@@ -173,6 +191,7 @@ body.day {
     div.header {
         div.header__text {
             color: #000000;
+            text-shadow: 0 0 3px #cccccc;
         }
         div.header__btn {
             color: #eeaa33;
@@ -186,9 +205,6 @@ body.day {
 
         div.footer__btn {
             &:extend(body.day div.header div.header__btn);
-            img.img-btn {
-                color: #eeaa33;
-            }
         }
     }
 
@@ -205,6 +221,51 @@ body.day {
     div.index-box {
         div.index-box__title {
             color: #333333;
+            text-shadow: 0 0 3px #cccccc;
+        }
+        div.index-box__time {
+            color: #999999;
+        }
+    }
+}
+
+body.night {
+    background-color: #222222;
+
+    div.header {
+        div.header__text {
+            color: #ffffff;
+            text-shadow: 0 0 3px #444444;
+        }
+        div.header__btn {
+            color: #eeaa33;
+        }
+    }
+
+    div.footer {
+        div.footer__text {
+            &:extend(body.night div.header div.header__text);
+        }
+
+        div.footer__btn {
+            &:extend(body.night div.header div.header__btn);
+        }
+    }
+
+    div.write-box {
+        div.write-box__title {
+            color: #eeeeee;
+        }
+
+        div.write-box__content {
+            color: #dddddd;
+        }
+    }
+
+    div.index-box {
+        div.index-box__title {
+            color: #ffffff;
+            text-shadow: 0 0 3px #444444;
         }
         div.index-box__time {
             color: #999999;

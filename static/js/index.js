@@ -1,21 +1,3 @@
-class Pager {
-    constructor({count, api, last=0}) {
-        this.count = count;
-        this.last = last;
-        this.api = api;
-    }
-
-    next(callback) {
-        if (this.last === null) {
-            return;
-        }
-        Request.get(this.api, {count: this.count, last: this.last})
-            .then(resp => {
-                this.last = resp.next_value;
-                callback(resp);
-            });
-    }
-}
 class IndexComponent {
     constructor({indexBoxId, poemCountId}) {
         this.indexBox = document.getElementById(indexBoxId);
@@ -36,18 +18,16 @@ class IndexComponent {
 
         let poemList = resp.object_list;
         let indexItemTemplate = template`
-        <a href="${2}">
-            <div class="index-box__item-box">
-                <div class="index-box__title">${0}</div>
-                <div class="index-box__time">${1}</div>
-            </div>
-        </a>`;
+        <div class="index-box__item-box" onclick="writerComponent.read('${2}'); pageArranger.writer();">
+            <div class="index-box__title">${0}</div>
+            <div class="index-box__time">${1}</div>
+        </div>`;
 
         for (let poem of poemList) {
             let html = stringToHtml(indexItemTemplate(
                 poem.title,
                 new Time({timestamp: poem.create_time}).relative,
-                `/writer/@${poem.id}`,
+                poem.id,
             ));
             this.indexBox.appendChild(html);
         }

@@ -15,14 +15,30 @@ div {
   background: none;
   resize: none;
 }
+.smooth,
+body,
+body div.page {
+  transition: 0.5s;
+}
 body {
   position: fixed;
   width: 100vw;
   height: 100vh;
 }
+body div.page {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+body #index-page {
+  left: 0;
+}
+body #writer-page {
+  left: 100vw;
+}
 body div.header,
 body div.footer {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -35,7 +51,6 @@ body div.footer div.footer__middle div.footer__middle__text,
 body div.footer div.footer__btn {
   font-size: 16px;
   font-weight: bold;
-  text-shadow: 0 0 3px #cccccc;
 }
 body div.header div.header__btn,
 body div.footer div.footer__btn {
@@ -91,7 +106,7 @@ body div.footer div.footer__right {
   height: 40px;
 }
 body div.write-box {
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: calc(100% - 50px);
   left: 0;
@@ -111,7 +126,7 @@ body div.write-box div.write-box__content {
   overflow-y: scroll;
 }
 body div.index-box {
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: calc(100% - 50px - 40px);
   left: 0;
@@ -139,7 +154,6 @@ body div.index-box div.index-box__item-box div.index-box__title {
   overflow-x: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  text-shadow: 0 0 3px #cccccc;
 }
 body div.index-box div.index-box__item-box div.index-box__time {
   font-size: 13px;
@@ -150,12 +164,10 @@ body.day {
 body.day div.header div.header__text,
 body.day div.footer div.footer__text {
   color: #000000;
+  text-shadow: 0 0 3px #cccccc;
 }
 body.day div.header div.header__btn,
 body.day div.footer div.footer__btn {
-  color: #eeaa33;
-}
-body.day div.footer div.footer__btn img.img-btn {
   color: #eeaa33;
 }
 body.day div.write-box div.write-box__title {
@@ -166,8 +178,34 @@ body.day div.write-box div.write-box__content {
 }
 body.day div.index-box div.index-box__title {
   color: #333333;
+  text-shadow: 0 0 3px #cccccc;
 }
 body.day div.index-box div.index-box__time {
+  color: #999999;
+}
+body.night {
+  background-color: #222222;
+}
+body.night div.header div.header__text,
+body.night div.footer div.footer__text {
+  color: #ffffff;
+  text-shadow: 0 0 3px #444444;
+}
+body.night div.header div.header__btn,
+body.night div.footer div.footer__btn {
+  color: #eeaa33;
+}
+body.night div.write-box div.write-box__title {
+  color: #eeeeee;
+}
+body.night div.write-box div.write-box__content {
+  color: #dddddd;
+}
+body.night div.index-box div.index-box__title {
+  color: #ffffff;
+  text-shadow: 0 0 3px #444444;
+}
+body.night div.index-box div.index-box__time {
   color: #999999;
 }
 /*# sourceMappingURL=main.css.map */

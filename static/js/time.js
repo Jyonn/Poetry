@@ -7,12 +7,12 @@ class Time {
         return [
             [
                 this.time.getFullYear(),
-                this.time.getMonth(),
+                this.time.getMonth() + 1,
                 this.time.getDate()
             ].join('.'),
             [
-                this.time.getHours(),
-                this.time.getMinutes(),
+                Time.addZero(this.time.getHours()),
+                Time.addZero(this.time.getMinutes()),
             ].join(':'),
         ].join(' ')
     }
@@ -41,7 +41,7 @@ class Time {
 
         let year = new Date();
         year.setHours(0, 0, 0, 0);
-        year.setMonth(1, 1);
+        year.setMonth(0, 1);
 
         let delta = (current.getTime() - this.time.getTime()) / 1000;
         let zeroDelta = (zero.getTime() - this.time.getTime()) / 1000;
@@ -58,9 +58,9 @@ class Time {
         } else if (zeroDelta < 60 * 60 * 24) {
             return `昨天${this.getTwelveTime()}`;
         } else if (yearDelta <= 0) {
-            return `${this.time.getMonth()}/${this.time.getDate()}`;
+            return `${this.time.getMonth() + 1}/${this.time.getDate()}`;
         } else {
-            return `${this.time.getFullYear()}/${this.time.getMonth()}/${this.time.getDate()}`;
+            return `${this.time.getFullYear()}/${this.time.getMonth() + 1}/${this.time.getDate()}`;
         }
     }
 }
