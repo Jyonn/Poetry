@@ -11,7 +11,7 @@ class Time {
                 this.time.getDate()
             ].join('.'),
             [
-                Time.addZero(this.time.getHours()),
+                this.time.getHours(),
                 Time.addZero(this.time.getMinutes()),
             ].join(':'),
         ].join(' ')
@@ -31,7 +31,7 @@ class Time {
         if (twelveHours === 0) {
             twelveHours = 12;
         }
-        return `${hours < 12 ? '上午' : '下午'}${Time.addZero(twelveHours)}:${Time.addZero(this.time.getMinutes())}`
+        return `${hours < 12 ? '上午' : '下午'}${twelveHours}:${Time.addZero(this.time.getMinutes())}`
     }
 
     get relative() {
