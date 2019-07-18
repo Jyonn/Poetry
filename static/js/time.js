@@ -28,7 +28,7 @@ class Time {
             dateStr = `${this.time.getMonth() + 1}/${this.time.getDate()}`
         }
         if (withYear) {
-            dateStr = `${this.time.getFullYear()}` + '/年'[format==='cn'] + dateStr;
+            dateStr = `${this.time.getFullYear()}` + '/年'[+(format==='cn')] + dateStr;
         }
         return dateStr;
     }

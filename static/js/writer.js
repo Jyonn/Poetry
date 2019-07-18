@@ -1,8 +1,10 @@
 class WriterComponent {
-    constructor({appNameId, titleId, contentId, publishId}) {
+    constructor({appNameId, titleId, contentId, publishId, createTimeId}) {
         this.appName = document.getElementById(appNameId);
         this.title = document.getElementById(titleId);
         this.content = document.getElementById(contentId);
+        this.createTime = document.getElementById(createTimeId);
+
         this.publishBtn = document.getElementById(publishId);
         this.publishBtn.addEventListener('click', this.publish.bind(this));
     }
@@ -16,7 +18,7 @@ class WriterComponent {
             .then(resp => {
                 this.title.innerText = resp.title;
                 this.content.innerText = resp.content;
-                this.createTime = new Time({timestamp: resp.create_time});
+                this.createTime.innerText = new Time({timestamp: resp.create_time}).getDateTime('cn', true);
             });
     }
 
@@ -26,9 +28,10 @@ class WriterComponent {
         this.content.contentEditable = 'true';
         this.title.innerText = '';
         this.content.innerText = '';
+        this.createTime.innerText = '';
 
-        this.createTime = new Time({timestamp: new Date().getTime() / 1000});
-        this.title.setAttribute('placeholder', this.createTime.getDateTime() + '的' + this.appName.innerText);
+        this.currentTime = new Time({timestamp: new Date().getTime() / 1000});
+        this.title.setAttribute('placeholder', this.currentTime.getDateTime() + '的' + this.appName.innerText);
     }
 
     publish() {

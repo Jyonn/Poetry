@@ -135,6 +135,12 @@ body div.write-box div.write-box__content {
   height: calc(100% - 30px - 10px);
   overflow-y: scroll;
 }
+body div.write-box div.write-box__time {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 12px;
+}
 body div.index-box {
   position: absolute;
   width: 100%;
@@ -187,6 +193,9 @@ body.day div.write-box div.write-box__title:empty:before {
 body.day div.write-box div.write-box__content {
   color: #484848;
 }
+body.day div.write-box div.write-box__time {
+  color: #666666;
+}
 body.day div.index-box div.index-box__title {
   color: #333333;
   text-shadow: 0 0 3px #cccccc;
@@ -218,6 +227,9 @@ body.night div.write-box div.write-box__title:empty:before {
 }
 body.night div.write-box div.write-box__content {
   color: #dddddd;
+}
+body.night div.write-box div.write-box__time {
+  color: #cccccc;
 }
 body.night div.index-box div.index-box__title {
   color: #ffffff;
