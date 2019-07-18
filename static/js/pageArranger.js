@@ -5,12 +5,12 @@ class PageArranger {
     }
 
     index() {
-        this.indexPage.style.left = '0';
-        this.writerPage.style.left = '100vw';
+        activate(this.indexPage);
+        deactivate(this.writerPage);
     }
 
     writer() {
-        this.indexPage.style.left = '-100vw';
-        this.writerPage.style.left = '0';
+        activate(this.writerPage);
+        deactivate(this.indexPage);
     }
 }

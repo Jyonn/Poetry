@@ -16,6 +16,14 @@ input, textarea, div {
   resize: none;
 }
 
+div[contenteditable]:empty:before{
+    content: attr(placeholder);
+}
+
+div[contenteditable]:focus{
+    content:none;
+}
+
 .smooth {
     transition: 0.5s;
 }
@@ -36,11 +44,15 @@ body {
         height: 100%;
     }
 
-    #index-page {
+    div.page.active {
         left: 0;
     }
 
-    #writer-page {
+    div.page.main-page.inactive {
+        left: -100vw;
+    }
+
+    div.page.detail-page.inactive {
         left: 100vw;
     }
 
@@ -212,6 +224,10 @@ body.day {
             color: #444444;
         }
 
+        div.write-box__title:empty:before {
+            color: #666666;
+        }
+
         div.write-box__content {
             color: #484848;
         }
@@ -260,6 +276,10 @@ body.night {
             color: #eeeeee;
         }
 
+        div.write-box__title:empty:before {
+            color: #cccccc;
+        }
+
         div.write-box__content {
             color: #dddddd;
         }
@@ -276,6 +296,25 @@ body.night {
         div.index-box__item-box {
             border-top-color: #333333;
             border-bottom-color: #333333;
+        }
+    }
+}
+
+@landscape-left-page-width: 38.2%;
+
+@media all and (orientation: landscape) {
+    div.page.main-page {
+        width: @landscape-left-page-width;
+        left: 0!important;
+    }
+    div.page.detail-page {
+        width: calc(~'100% - @{landscape-left-page-width}');
+        left: @landscape-left-page-width!important;
+    }
+
+    div.header {
+        div.header__btn {
+            display: none;
         }
     }
 }

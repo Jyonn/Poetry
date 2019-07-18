@@ -3,20 +3,6 @@ class Time {
         this.time = new Date(timestamp * 1000);
     }
 
-    get yearToMinute() {
-        return [
-            [
-                this.time.getFullYear(),
-                this.time.getMonth() + 1,
-                this.time.getDate()
-            ].join('.'),
-            [
-                this.time.getHours(),
-                Time.addZero(this.time.getMinutes()),
-            ].join(':'),
-        ].join(' ')
-    }
-
     static addZero(number) {
         if (number < 10) {
             return `0${number}`;
@@ -32,6 +18,35 @@ class Time {
             twelveHours = 12;
         }
         return `${hours < 12 ? '上午' : '下午'}${twelveHours}:${Time.addZero(this.time.getMinutes())}`
+    }
+
+    getDate(format='cn', withYear=false) {
+        let dateStr;
+        if (format === 'cn') {
+            dateStr = `${this.time.getMonth() + 1}月${this.time.getDate()}日`
+        } else {
+            dateStr = `${this.time.getMonth() + 1}/${this.time.getDate()}`
+        }
+        if (withYear) {
+            dateStr = `${this.time.getFullYear()}` + '/年'[format==='cn'] + dateStr;
+        }
+        return dateStr;
+    }
+
+    getTime(format='cn', withMinute=true) {
+        if (format === 'cn') {
+            if (withMinute) {
+                return `${this.time.getHours()}时${Time.addZero(this.time.getMinutes())}分`
+            } else {
+                return `${this.time.getHours()}时`
+            }
+        } else {
+            return `${this.time.getHours()}:${Time.addZero(this.time.getMinutes())}`
+        }
+    }
+
+    getDateTime(format='cn', withYear=false, withMinute) {
+        return `${this.getDate(format, withYear)} ${this.getTime(format, withMinute)}`;
     }
 
     get relative() {
@@ -57,10 +72,8 @@ class Time {
             }
         } else if (zeroDelta < 60 * 60 * 24) {
             return `昨天${this.getTwelveTime()}`;
-        } else if (yearDelta <= 0) {
-            return `${this.time.getMonth() + 1}/${this.time.getDate()}`;
         } else {
-            return `${this.time.getFullYear()}/${this.time.getMonth() + 1}/${this.time.getDate()}`;
+            return `${this.getDate('cn', yearDelta > 0)}`;
         }
     }
 }

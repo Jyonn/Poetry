@@ -28,11 +28,11 @@ class WriterComponent {
         this.content.innerText = '';
 
         this.createTime = new Time({timestamp: new Date().getTime() / 1000});
-        this.title.innerText = this.createTime.yearToMinute + '的' + this.appName.innerText;
+        this.title.setAttribute('placeholder', this.createTime.getDateTime() + '的' + this.appName.innerText);
     }
 
     publish() {
-        const title = this.title.innerText;
+        const title = this.title.innerText || this.title.getAttribute('placeholder');
         const content = this.content.innerText;
         console.log(content.length);
         if (content.length === 0) {

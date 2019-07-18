@@ -7,7 +7,7 @@
     <script src="{% static "js/index.js" %}"></script>
     <script src="{% static "js/writer.js" %}"></script>
 
-    <div class="page" id="index-page">
+    <div class="page main-page" id="index-page">
         <div class="header">
             <div class="header__middle">
                 <div class="header__text" id="app-name" onclick="dayNight.toggle()">投明</div>
@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div class="page" id="writer-page">
+    <div class="page detail-page" id="writer-page">
         <div class="header">
             <div class="header__left">
                 <div class="header__btn" onclick="pageArranger.index()">返回</div>
@@ -78,6 +78,7 @@
             pageArranger.writer();
         } else {
             pageArranger.index();
+            writerComponent.write();
         }
     </script>
 {% endblock %}
