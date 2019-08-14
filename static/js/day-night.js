@@ -1,8 +1,8 @@
 class DayNight {
     constructor({appNameId, footTextId}) {
         this.body = document.body;
-        this.appName = document.getElementById(appNameId);
-        this.footText = document.getElementById(footTextId);
+        this.appName = document.getElementById(appNameId) | document.createElement('div');
+        this.footText = document.getElementById(footTextId) | document.createElement('div');
         this.is_day = true;
 
         if (Store.load('dayNight') === 'night') {

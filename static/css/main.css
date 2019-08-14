@@ -233,6 +233,7 @@ body div.center-box div.loading-box .spinnerMin {
 }
 body div.center-box div.center-box__center-item {
   font-size: 5vw;
+  margin-left: 20px;
 }
 body.day {
   background-color: #f8f8f8;
@@ -272,7 +273,6 @@ body.day div.index-box div.index-box__item-box {
 body.day div.center-box div.center-box__center-item {
   color: #000000;
   text-shadow: 0 0 3px #cccccc;
-  margin-left: 20px;
 }
 body.day div.center-box div.loading-box div.spinner {
   border-top-color: #000000;
@@ -312,6 +312,14 @@ body.night div.index-box div.index-box__time {
 body.night div.index-box div.index-box__item-box {
   border-top-color: #333333;
   border-bottom-color: #333333;
+}
+body.night div.center-box div.center-box__center-item {
+  color: #ffffff;
+  text-shadow: 0 0 3px #444444;
+}
+body.night div.center-box div.loading-box div.spinner {
+  border-top-color: #000000;
+  border-right-color: #000000;
 }
 @media all and (orientation: landscape) {
   div.page.main-page {
