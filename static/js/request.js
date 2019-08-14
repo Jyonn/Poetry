@@ -16,13 +16,25 @@ class ErrorHandler {
 
 class Request {
     static staticConstructor() {
+        this.token = Store.load('token');
     }
+
+    static saveToken(token) {
+        this.token = token;
+        Store.save('token', token);
+    }
+
+    static removeToken() {
+        Store.remove('token');
+    }
+
     static getQueryString(params) {
       const esc = encodeURIComponent;
       return Object.keys(params)
         .map(k => esc(k) + '=' + esc(params[k]))
         .join('&');
     }
+
     static async baseFetch(method, url, data=null, credential=true, json=true) {
         if ((method === Method.GET || method === Method.DELETE) && data) {
             url += '?' + this.getQueryString(data);

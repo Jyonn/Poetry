@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.urls import path, include
 
-from Poetry.views import WriterView, IndexView
+from Poetry.views import OAuthView, WriterView, IndexView
 
 urlpatterns = [
     path('', IndexView.as_view()),
+    path('oauth', OAuthView.as_view()),
     path('writer', WriterView.as_view()),
     path('writer/<str:poem_id>', WriterView.as_view()),
     path('api/', include('Poetry.api_urls')),

@@ -6,4 +6,8 @@ class Store {
     static save(key, value) {
         window.localStorage.setItem(key, value);
     }
+
+    static remove(key) {
+        window.localStorage.removeItem(key);
+    }
 }

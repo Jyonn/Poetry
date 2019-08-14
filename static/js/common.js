@@ -36,3 +36,9 @@ function toggle(ele) {
         activate(ele);
     }
 }
+
+function getQueryParam(key) {
+    let params = new URLSearchParams(window.location.search);
+    if (params.has(key))
+        return params.get(key);
+}

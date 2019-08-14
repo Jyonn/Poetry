@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block main %}
+    <script src="{% static "js/day-night.js" %}"></script>
+    <div class="page center-box">
+        <div class="loading-box">
+{#            <div class="spinner spinnerMax">#}
+                <div class="spinner spinnerMid">
+                    <div class="spinner spinnerMin"></div>
+                </div>
+{#            </div>#}
+        </div>
+        <div class="center-box__center-item">正在处理授权…</div>
+    </div>
+
+    <script>
+        let dayNight = new DayNight({
+            appNameId: null,
+            footTextId: null,
+        });
+
+        let code = getQueryParam('code');
+        Request.post(`/api/user/oauth`, {code: code})
+            .then(resp => {
+                Request.saveToken(resp['token']);
+                Jump.center();
+            })
+            .catch(() => {
+                Jump.oauth();
+            });
+    </script>
+{% endblock %}

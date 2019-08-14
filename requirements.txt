@@ -3,3 +3,4 @@ SmartDjango==2.0.3b0
 gunicorn
 django-cors-headers>=2.1.0
 mysqlclient>=1.3.12
+QitianSDK

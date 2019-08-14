@@ -11,6 +11,7 @@
         <div class="header">
             <div class="header__middle">
                 <div class="header__text" id="app-name" onclick="dayNight.toggle()">投明</div>
+                <div class="header__avatar img-fit" id="avatar"></div>
             </div>
         </div>
 
@@ -52,6 +53,10 @@
             footTextId: 'foot-text',
         });
 
+        if (!Request.token) {
+            Jump.oauth();
+        }
+
         let pageArranger = new PageArranger({
             indexPageId: 'index-page',
             writerPageId: 'writer-page',
@@ -60,6 +65,7 @@
         let indexComponent = new IndexComponent({
             indexBoxId: 'index-box',
             poemCountId: 'poem-count',
+            avatarId: 'avatar',
         });
 
         let writerComponent = new WriterComponent({

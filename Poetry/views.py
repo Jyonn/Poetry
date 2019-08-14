@@ -12,3 +12,9 @@ class WriterView(View):
     @staticmethod
     def get(r, **kwargs):
         return render(r, 'index.html')
+
+
+class OAuthView(View):
+    @staticmethod
+    def get(r):
+        return render(r, 'oauth/index.html')

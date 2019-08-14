@@ -3,8 +3,8 @@ import datetime
 from SmartDjango import Packing, Analyse, Param, SmartPager
 from django.views import View
 
-from Poem.models import PM_CONTENT, PM_TITLE, Poem
-
+from Base.auth import Auth
+from Poem.models import PM_CONTENT, PM_TITLE, Poem, PoemError
 
 PM_LAST = Param('last').process(int).process(lambda v: v if v else Poem.objects.count() + 1)
 PM_COUNT = Param('count').process(int).process(lambda v: min(max(v, 1), 15))
@@ -13,11 +13,15 @@ PM_COUNT = Param('count').process(int).process(lambda v: min(max(v, 1), 15))
 class PoemIDView(View):
     @staticmethod
     @Packing.http_pack
+    @Auth.require_login
     def get(r, poem_id):
         ret = Poem.get_by_id(poem_id)
         if not ret.ok:
             return ret
         poem = ret.body
+
+        if not poem.belong(r.user):
+            return PoemError.POEM_NOT_BELONG
 
         return poem.d()
 
@@ -26,15 +30,18 @@ class BaseView(View):
     @staticmethod
     @Packing.http_pack
     @Analyse.r(q=[PM_LAST, PM_COUNT])
+    @Auth.require_login
     def get(r):
-        page = Poem.objects.page(SmartPager(ascend=False), **r.d.dict())
+        poems = Poem.objects.filter(user=r.user)
+        page = poems.page(SmartPager(ascend=False), **r.d.dict())
         return page.dict(object_dictor=Poem.d_list)
 
     @staticmethod
     @Packing.http_pack
     @Analyse.r([PM_TITLE, PM_CONTENT])
+    @Auth.require_login
     def post(r):
-        ret = Poem.create(**r.d.dict())
+        ret = Poem.create(user=r.user, **r.d.dict())
         if not ret.ok:
             return ret
         poem = ret.body

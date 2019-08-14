@@ -8,6 +8,7 @@ from django.db.models import Q
 class PoemError(ErrorCenter):
     POEM_NOT_FOUND = E("不存在的诗歌")
     CREATE_POEM = E("发布诗歌失败")
+    POEM_NOT_BELONG = E("没有查看权限")
 
 
 PoemError.register()
@@ -31,13 +32,22 @@ class Poem(SmartModel):
         verbose_name='发布时间',
     )
 
+    user = models.ForeignKey(
+        'User.User',
+        verbose_name='作者',
+        default=None,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
     @classmethod
     @Packing.pack
-    def create(cls, title, content):
+    def create(cls, title, content, user):
         crt_time = datetime.datetime.now()
 
         try:
             poem = cls(
+                user=user,
                 title=title,
                 content=content,
                 create_time=crt_time,
@@ -46,6 +56,10 @@ class Poem(SmartModel):
         except Exception as err:
             return PoemError.CREATE_POEM
         return poem
+
+    """
+    查询函数
+    """
 
     @classmethod
     @Packing.pack
@@ -56,9 +70,20 @@ class Poem(SmartModel):
             return PoemError.POEM_NOT_FOUND
         return poem
 
+    def belong(self, user):
+        return self.user == user
+
+    """
+    筛选函数
+    """
+
     @staticmethod
     def _search_keyword(v):
         return Q(title__contains=v) | Q(content__contains=v)
+
+    """
+    字典函数
+    """
 
     def _readable_id(self):
         return self.pk

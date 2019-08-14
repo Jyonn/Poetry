@@ -21,6 +21,12 @@ div[contenteditable]:empty:before {
 div[contenteditable]:focus {
   content: none;
 }
+.img-fit {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inherit;
+}
 .smooth,
 body,
 body div.page,
@@ -61,6 +67,13 @@ body div.footer div.footer__middle div.footer__middle__text,
 body div.footer div.footer__btn {
   font-size: 16px;
   font-weight: bold;
+}
+body div.header div.header__avatar {
+  position: absolute;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
 }
 body div.header div.header__btn,
 body div.footer div.footer__btn {
@@ -172,6 +185,55 @@ body div.index-box div.index-box__item-box div.index-box__title {
 body div.index-box div.index-box__item-box div.index-box__time {
   font-size: 13px;
 }
+body div.center-box {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: center;
+}
+body div.center-box div.loading-box {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+body div.center-box div.loading-box .spinner {
+  align-items: center;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid transparent;
+  border-top-width: 5px;
+  border-right-width: 5px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+body div.center-box div.loading-box .spinnerMax {
+  animation: spinner 3s linear infinite;
+  height: 60px;
+  width: 60px;
+}
+body div.center-box div.loading-box .spinnerMid {
+  animation: spinner 5s linear infinite;
+  height: 50px;
+  width: 50px;
+}
+body div.center-box div.loading-box .spinnerMin {
+  animation: spinner 5s linear infinite;
+  height: 40px;
+  width: 40px;
+}
+body div.center-box div.center-box__center-item {
+  font-size: 5vw;
+}
 body.day {
   background-color: #f8f8f8;
 }
@@ -206,6 +268,15 @@ body.day div.index-box div.index-box__time {
 body.day div.index-box div.index-box__item-box {
   border-top-color: #dddddd;
   border-bottom-color: #dddddd;
+}
+body.day div.center-box div.center-box__center-item {
+  color: #000000;
+  text-shadow: 0 0 3px #cccccc;
+  margin-left: 20px;
+}
+body.day div.center-box div.loading-box div.spinner {
+  border-top-color: #000000;
+  border-right-color: #000000;
 }
 body.night {
   background-color: #222222;
