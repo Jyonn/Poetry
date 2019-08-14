@@ -1,8 +1,8 @@
 class DayNight {
     constructor({appNameId, footTextId}) {
         this.body = document.body;
-        this.appName = document.getElementById(appNameId) | document.createElement('div');
-        this.footText = document.getElementById(footTextId) | document.createElement('div');
+        this.appName = document.getElementById(appNameId);
+        this.footText = document.getElementById(footTextId);
         this.is_day = true;
 
         if (Store.load('dayNight') === 'night') {
@@ -22,8 +22,12 @@ class DayNight {
         this.body.classList.remove('night');
         this.body.classList.add('day');
         this.is_day = true;
-        this.appName.innerText = '投明';
-        this.footText.innerText = '暗';
+        if (this.appName) {
+            this.appName.innerText = '投明';
+        }
+        if (this.footText) {
+            this.footText.innerText = '暗';
+        }
         Store.save('dayNight', 'day');
     }
 
@@ -31,8 +35,12 @@ class DayNight {
         this.body.classList.remove('day');
         this.body.classList.add('night');
         this.is_day = false;
-        this.appName.innerText = '投暗';
-        this.footText.innerText = '明';
+        if (this.appName) {
+            this.appName.innerText = '投暗';
+        }
+        if (this.footText) {
+            this.footText.innerText = '明';
+        }
         Store.save('dayNight', 'night');
     }
 }

@@ -318,8 +318,8 @@ body.night div.center-box div.center-box__center-item {
   text-shadow: 0 0 3px #444444;
 }
 body.night div.center-box div.loading-box div.spinner {
-  border-top-color: #000000;
-  border-right-color: #000000;
+  border-top-color: #ffffff;
+  border-right-color: #ffffff;
 }
 @media all and (orientation: landscape) {
   div.page.main-page {
