@@ -15,10 +15,9 @@ class ErrorHandler {
 }
 
 class Request {
-    static _handler = null;
-
     static staticConstructor() {
         this.token = Store.load('token');
+        this._handler = null;
     }
 
     static saveToken(token) {
