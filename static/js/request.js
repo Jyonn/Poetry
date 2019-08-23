@@ -15,6 +15,8 @@ class ErrorHandler {
 }
 
 class Request {
+    static _handler = null;
+
     static staticConstructor() {
         this.token = Store.load('token');
     }
@@ -26,6 +28,10 @@ class Request {
 
     static removeToken() {
         Store.remove('token');
+    }
+
+    static setHandler(handler) {
+        this._handler = handler;
     }
 
     static getQueryString(params) {
@@ -61,8 +67,9 @@ class Request {
         }
         return req.json().then((resp) => {
             if (resp.code !== 0) {
-                // InfoCenter.push(new Info(resp.msg));
-                alert(resp.msg);
+                if (!this._handler || this._handler(resp)) {
+                    alert(resp.msg);
+                }
                 return ErrorHandler.handler(resp);
             }
             return resp.body;

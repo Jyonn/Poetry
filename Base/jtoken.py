@@ -21,7 +21,7 @@ JWTError.register()
 
 class JWT:
     @staticmethod
-    def encrypt(dict_, replace=True, expire_second=7 * 60 * 60 * 24):
+    def encrypt(dict_, replace=True, expire_second=30 * 60 * 60 * 24):
         """
         jwt签名加密
         :param replace: 如果dict_中存在ctime或expire是否替换

@@ -48,6 +48,17 @@
     </div>
 
     <script>
+        let handler = (resp) => {
+            let re_login_ids = ['JWT_EXPIRED', 'ERROR_JWT_FORMAT'];
+            if (re_login_ids.includes(resp.identifier)) {
+                Jump.oauth();
+                return true;
+            }
+            return false;
+        };
+
+        Request.setHandler(handler);
+
         let dayNight = new DayNight({
             appNameId: 'app-name',
             footTextId: 'foot-text',

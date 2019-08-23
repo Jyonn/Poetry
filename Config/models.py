@@ -1,5 +1,5 @@
 from django.db import models
-
+import pypinyin
 from SmartDjango import ErrorCenter, SmartModel, Packing, E
 
 
@@ -51,6 +51,7 @@ class Config(SmartModel):
             return default
 
     @classmethod
+    @Packing.pack
     def update_value(cls, key, value):
         ret = cls.validator(locals())
         if not ret.ok:
