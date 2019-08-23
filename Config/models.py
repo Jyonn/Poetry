@@ -1,5 +1,4 @@
 from django.db import models
-import pypinyin
 from SmartDjango import ErrorCenter, SmartModel, Packing, E
 
 
