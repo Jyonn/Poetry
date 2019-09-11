@@ -17,8 +17,8 @@ class OAuthView(View):
         """
         code = r.d.code
         data = qt_manager.get_token(code)
-        qt_token = data.body['token']
-        qt_user_app_id = data.body['user_app_id']
+        qt_token = data['token']
+        qt_user_app_id = data['user_app_id']
 
         user = User.create(qt_user_app_id, qt_token)
         user.update()
