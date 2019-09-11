@@ -73,8 +73,8 @@ class User(models.Model):
                     user.save()
                 except Exception:
                     return UserError.CREATE_USER
-        finally:
-            return UserError.CREATE_USER
+            else:
+                return UserError.CREATE_USER
 
     @Excp.pack
     def update(self):
