@@ -1,5 +1,4 @@
-from SmartDjango import SmartModel, Packing, ErrorCenter, E
-from django.db import models
+from SmartDjango import models, Excp, ErrorCenter, E
 
 
 class UserError(ErrorCenter):
@@ -10,7 +9,7 @@ class UserError(ErrorCenter):
 UserError.register()
 
 
-class User(SmartModel):
+class User(models.Model):
     MAX_L = {
         'avatar': 1024,
         'nickname': 10,
@@ -23,7 +22,7 @@ class User(SmartModel):
         default=None,
         null=True,
         blank=True,
-        max_length=MAX_L['avatar']
+        max_length=1024,
     )
 
     nickname = models.CharField(
@@ -31,59 +30,56 @@ class User(SmartModel):
         default=None,
         blank=True,
         null=True,
-        max_length=MAX_L['nickname']
+        max_length=10,
     )
 
     qt_user_app_id = models.CharField(
         verbose_name='齐天簿ID',
-        max_length=MAX_L['qt_user_app_id']
+        max_length=16,
     )
 
     qt_token = models.CharField(
         verbose_name='齐天簿口令',
-        max_length=MAX_L['qt_token']
+        max_length=256,
+        min_length=4,
     )
 
     @staticmethod
-    @Packing.pack
+    @Excp.pack
     def get_by_qt_user_app_id(qt_user_app_id):
         try:
-            o_user = User.objects.get(qt_user_app_id=qt_user_app_id)
+            user = User.objects.get(qt_user_app_id=qt_user_app_id)
         except User.DoesNotExist as err:
             return UserError.USER_NOT_FOUND
-        return o_user
+        return user
 
     @classmethod
-    @Packing.pack
+    @Excp.pack
     def create(cls, qt_user_app_id, qt_token):
-        ret = cls.validator(locals())
-        if not ret.ok:
-            return ret
+        cls.validator(locals())
 
-        ret = cls.get_by_qt_user_app_id(qt_user_app_id)
-        if ret.erroris(UserError.USER_NOT_FOUND):
-            try:
-                o_user = cls(
-                    qt_user_app_id=qt_user_app_id,
-                    qt_token=qt_token,
-                )
-                o_user.save()
-            except Exception as err:
-                return UserError.CREATE_USER
-        else:
-            o_user = ret.body
-            o_user.qt_token = qt_token
-            o_user.save()
-        return o_user
+        try:
+            user = cls.get_by_qt_user_app_id(qt_user_app_id)
+            user.qt_token = qt_token
+            user.save()
+            return user
+        except Excp as excp:
+            if excp.erroris(UserError.USER_NOT_FOUND):
+                try:
+                    user = cls(
+                        qt_user_app_id=qt_user_app_id,
+                        qt_token=qt_token,
+                    )
+                    user.save()
+                except Exception:
+                    return UserError.CREATE_USER
+        finally:
+            return UserError.CREATE_USER
 
-    @Packing.pack
+    @Excp.pack
     def update(self):
         from Base.common import qt_manager
-        ret = qt_manager.get_user_info(self.qt_token)
-        if not ret.ok:
-            return ret
-        data = ret.body
-        print(data)
+        data = qt_manager.get_user_info(self.qt_token)
         self.avatar = data['avatar']
         self.nickname = data['nickname']
         self.save()

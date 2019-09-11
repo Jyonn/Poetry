@@ -1,6 +1,6 @@
 from functools import wraps
 
-from SmartDjango import Packing, ErrorCenter, E
+from SmartDjango import Excp, ErrorCenter, E
 
 from Base.jtoken import JWT
 from User.models import User
@@ -16,18 +16,13 @@ AuthError.register()
 
 class Auth:
     @staticmethod
-    @Packing.pack
+    @Excp.pack
     def validate_token(request):
         jwt_str = request.META.get('HTTP_TOKEN')
         if jwt_str is None:
             return AuthError.REQUIRE_LOGIN
 
-        ret = JWT.decrypt(jwt_str)
-        if not ret.ok:
-            return ret
-        dict_ = ret.body
-
-        return dict_
+        return JWT.decrypt(jwt_str)
 
     @staticmethod
     def get_login_token(user: User):
@@ -39,31 +34,22 @@ class Auth:
         return _dict
 
     @classmethod
-    @Packing.pack
+    @Excp.pack
     def _extract_user(cls, r):
         r.user = None
 
-        ret = cls.validate_token(r)
-        if not ret.ok:
-            return ret
-
-        dict_ = ret.body
+        dict_ = cls.validate_token(r)
         user_id = dict_.get('user_id')
         if not user_id:
             return AuthError.TOKEN_MISS_PARAM('user_id')
 
         from User.models import User
-        ret = User.get_by_qt_user_app_id(user_id)
-        if not ret.ok:
-            return ret
-        r.user = ret.body
+        r.user = User.get_by_qt_user_app_id(user_id)
 
     @classmethod
     def require_login(cls, func):
         @wraps(func)
         def wrapper(r, *args, **kwargs):
-            ret = cls._extract_user(r)
-            if not ret.ok:
-                return ret
+            cls._extract_user(r)
             return func(r, *args, **kwargs)
         return wrapper

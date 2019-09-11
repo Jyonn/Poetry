@@ -1,5 +1,4 @@
-from django.db import models
-from SmartDjango import ErrorCenter, SmartModel, Packing, E
+from SmartDjango import ErrorCenter, models, Excp, E
 
 
 class ConfigError(ErrorCenter):
@@ -10,7 +9,7 @@ class ConfigError(ErrorCenter):
 ConfigError.register()
 
 
-class Config(SmartModel):
+class Config(models.Model):
     MAX_L = {
         'key': 100,
         'value': 255,
@@ -26,11 +25,9 @@ class Config(SmartModel):
     )
 
     @classmethod
-    @Packing.pack
+    @Excp.pack
     def get_config_by_key(cls, key):
-        ret = cls.validator(locals())
-        if not ret.ok:
-            return ret
+        cls.validator(locals())
 
         try:
             o_config = cls.objects.get(key=key)
@@ -42,34 +39,32 @@ class Config(SmartModel):
     @classmethod
     def get_value_by_key(cls, key, default=None):
         try:
-            ret = cls.get_config_by_key(key)
-            if not ret.ok:
-                return default
-            return ret.body.value
-        except Exception as err:
+            config = cls.get_config_by_key(key)
+            return config.value
+        except Exception:
             return default
 
     @classmethod
-    @Packing.pack
+    @Excp.pack
     def update_value(cls, key, value):
-        ret = cls.validator(locals())
-        if not ret.ok:
-            return ret
+        cls.validator(locals())
 
-        ret = cls.get_config_by_key(key)
-        if ret.ok:
-            o_config = ret.body
-            o_config.value = value
-            o_config.save()
-        else:
-            try:
-                o_config = cls(
-                    key=key,
-                    value=value,
-                )
-                o_config.save()
-            except Exception as err:
-                return ConfigError.CREATE_CONFIG
+        try:
+            config = cls.get_config_by_key(key)
+            config.value = value
+            config.save()
+        except Excp as excp:
+            if excp.erroris(ConfigError.CONFIG_NOT_FOUND):
+                try:
+                    config = cls(
+                        key=key,
+                        value=value,
+                    )
+                    config.save()
+                except Exception:
+                    return ConfigError.CREATE_CONFIG
+        finally:
+            return ConfigError.CREATE_CONFIG
 
 
 class ConfigInstance:

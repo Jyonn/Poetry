@@ -1,7 +1,6 @@
 import datetime
 
-from SmartDjango import SmartModel, ErrorCenter, E, Packing, Param
-from django.db import models
+from SmartDjango import ErrorCenter, E, Excp, models
 from django.db.models import Q
 
 
@@ -14,14 +13,10 @@ class PoemError(ErrorCenter):
 PoemError.register()
 
 
-class Poem(SmartModel):
-    MAX_L = {
-        'title': 100,
-    }
-
+class Poem(models.Model):
     title = models.CharField(
         verbose_name='诗名',
-        max_length=MAX_L['title'],
+        max_length=100,
     )
 
     content = models.TextField(
@@ -41,7 +36,7 @@ class Poem(SmartModel):
     )
 
     @classmethod
-    @Packing.pack
+    @Excp.pack
     def create(cls, title, content, user):
         crt_time = datetime.datetime.now()
 
@@ -62,7 +57,7 @@ class Poem(SmartModel):
     """
 
     @classmethod
-    @Packing.pack
+    @Excp.pack
     def get_by_id(cls, poem_id):
         try:
             poem = cls.objects.get(pk=poem_id)
@@ -101,4 +96,4 @@ class Poem(SmartModel):
         return self.dictor(['title', 'content', 'create_time'])
 
 
-PM_TITLE, PM_CONTENT = Param.from_fields(Poem.get_fields(['title', 'content']))
+PM_TITLE, PM_CONTENT = Poem.get_params('title', 'content')

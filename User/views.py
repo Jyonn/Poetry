@@ -1,4 +1,4 @@
-from SmartDjango import Packing, Analyse, Param
+from SmartDjango import Excp, Analyse, P
 from django.views import View
 
 from Base.auth import Auth
@@ -8,39 +8,32 @@ from Base.common import qt_manager
 
 class OAuthView(View):
     @staticmethod
-    @Packing.http_pack
-    @Analyse.r([Param('code', '授权码')])
+    @Excp.handle
+    @Analyse.r([P('code', '授权码')])
     def post(r):
         """POST /user/oauth
 
         打通齐天簿OAuth
         """
         code = r.d.code
-        ret = qt_manager.get_token(code)
-        if not ret.ok:
-            return ret
-        qt_token = ret.body['token']
-        qt_user_app_id = ret.body['user_app_id']
+        data = qt_manager.get_token(code)
+        qt_token = data.body['token']
+        qt_user_app_id = data.body['user_app_id']
 
-        ret = User.create(qt_user_app_id, qt_token)
-        if not ret.ok:
-            return ret
-        o_user = ret.body
+        user = User.create(qt_user_app_id, qt_token)
+        user.update()
 
-        ret = o_user.update()
-        if not ret.ok:
-            return ret
-
-        return Auth.get_login_token(o_user)
+        return Auth.get_login_token(user)
 
 
 class BaseView(View):
     @staticmethod
-    @Packing.http_pack
+    @Excp.handle
     @Auth.require_login
     def get(r):
         """GET /user/
 
         获取用户基本信息
         """
+        r.user.update()
         return r.user.d()
