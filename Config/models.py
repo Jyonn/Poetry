@@ -63,8 +63,8 @@ class Config(models.Model):
                     config.save()
                 except Exception:
                     return ConfigError.CREATE_CONFIG
-        finally:
-            return ConfigError.CREATE_CONFIG
+            else:
+                return ConfigError.CREATE_CONFIG
 
 
 class ConfigInstance:
