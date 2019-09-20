@@ -1,5 +1,5 @@
 class WriterComponent {
-    constructor({appNameId, titleId, contentId, publishId, createTimeId}) {
+    constructor({appNameId, titleId, contentId, publishId, createTimeId, editId}) {
         this.appName = document.getElementById(appNameId);
         this.title = document.getElementById(titleId);
         this.content = document.getElementById(contentId);
@@ -7,14 +7,31 @@ class WriterComponent {
 
         this.publishBtn = document.getElementById(publishId);
         this.publishBtn.addEventListener('click', this.publish.bind(this));
+        this.editBtn = document.getElementById(editId);
+        this.editBtn.addEventListener('click', this.edit.bind(this));
+
+        this.poemId = null;
     }
 
-    read(poemId) {
+    readUIPrep() {
+        this.editBtn.style.display = 'inherit';
         this.publishBtn.style.display = 'none';
         this.title.contentEditable = 'false';
         this.content.contentEditable = 'false';
+    }
 
-        Request.get(`/api/poem/@${poemId}`)
+    editUIPrep() {
+        this.editBtn.style.display = 'none';
+        this.publishBtn.style.display = 'inherit';
+        this.title.contentEditable = 'true';
+        this.content.contentEditable = 'true';
+    }
+
+    read(poemId) {
+        this.poemId = poemId;
+        this.readUIPrep();
+
+        Request.get(`/api/poem/@${this.poemId}`)
             .then(resp => {
                 this.title.innerText = resp.title;
                 this.content.innerText = resp.content;
@@ -22,10 +39,13 @@ class WriterComponent {
             });
     }
 
+    edit() {
+        this.editUIPrep();
+    }
+
     write() {
-        this.publishBtn.style.display = 'inherit';
-        this.title.contentEditable = 'true';
-        this.content.contentEditable = 'true';
+        this.poemId = null;
+        this.editUIPrep();
         this.title.innerText = '';
         this.content.innerText = '';
         this.createTime.innerText = '';
@@ -37,16 +57,23 @@ class WriterComponent {
     publish() {
         const title = this.title.innerText || this.title.getAttribute('placeholder');
         const content = this.content.innerText;
-        console.log(content.length);
         if (content.length === 0) {
             alert('字数过少');
             return;
         }
-        Request.post('/api/poem/', {title: title, content: content})
-            .then(resp => {
-                this.title.innerText = '';
-                this.content.innerText = '';
-                window.location.href = '/';
-            });
+
+        if (this.poemId === null) {
+            Request.post('/api/poem/', {title: title, content: content})
+                .then(resp => {
+                    this.title.innerText = '';
+                    this.content.innerText = '';
+                    window.location.href = '/';
+                });
+        } else {
+            Request.put(`/api/poem/@${this.poemId}`, {title: title, content: content})
+                .then(resp => {
+                    this.readUIPrep();
+                });
+        }
     }
 }

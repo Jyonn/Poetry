@@ -95,5 +95,15 @@ class Poem(models.Model):
     def d(self):
         return self.dictor(['title', 'content', 'create_time'])
 
+    """
+    修改函数
+    """
+
+    def update(self, title, content):
+        self.title = title
+        self.content = content
+        self.create_time = datetime.datetime.now()
+        self.save()
+
 
 PM_TITLE, PM_CONTENT = Poem.get_params('title', 'content')
