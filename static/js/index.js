@@ -18,7 +18,9 @@ class IndexComponent {
             });
     }
 
-    reloadData = this.loadData;
+    reloadData() {
+        this.loadData();
+    }
 
     display(resp) {
         if (this.pager.last === null) {

@@ -25,7 +25,7 @@ SECRET_KEY = '77+5x^y-imp99_4@-^jlf8=xp_jpp@^led40$m5v#*yr+h#a9v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['poetry.6-79.cn', 'localhost']
+ALLOWED_HOSTS = ['poetry.6-79.cn', 'localhost', '*']
 
 
 # Application definition
