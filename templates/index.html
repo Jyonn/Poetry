@@ -51,7 +51,7 @@
 
     <script>
         let handler = (resp) => {
-            let re_login_ids = ['JWT_EXPIRED', 'ERROR_JWT_FORMAT'];
+            let re_login_ids = ['JWT_EXPIRED', 'ERROR_JWT_FORMAT', 'QITIAN_GET_USER_INFO_FAIL', 'QITIAN_AUTH_FAIL'];
             if (re_login_ids.includes(resp.identifier)) {
                 Jump.oauth();
                 return true;
