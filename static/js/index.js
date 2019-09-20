@@ -1,19 +1,24 @@
 class IndexComponent {
     constructor({indexBoxId, poemCountId, avatarId}) {
         this.indexBox = document.getElementById(indexBoxId);
-        this.indexBox.innerHTML = '';
         this.poemCount = document.getElementById(poemCountId);
         this.avatar = document.getElementById(avatarId);
 
+        this.loadData();
+        this.indexBox.addEventListener('scroll', this.scrollListener.bind(this));
+    }
+
+    loadData() {
+        this.indexBox.innerHTML = '';
         this.pager = new Pager({count: 10, api: '/api/poem/'});
         this.pager.next(this.display.bind(this));
         Request.get('/api/user/')
             .then(resp => {
                 this.avatar.style.backgroundImage = `url('${resp.avatar}')`;
             });
-
-        this.indexBox.addEventListener('scroll', this.scrollListener.bind(this));
     }
+
+    reloadData = this.loadData;
 
     display(resp) {
         if (this.pager.last === null) {

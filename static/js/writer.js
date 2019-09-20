@@ -67,11 +67,13 @@ class WriterComponent {
                 .then(resp => {
                     this.title.innerText = '';
                     this.content.innerText = '';
-                    window.location.href = '/';
+                    indexComponent.reloadData();
+                    pageArranger.index();
                 });
         } else {
             Request.put(`/api/poem/@${this.poemId}`, {title: title, content: content})
                 .then(resp => {
+                    indexComponent.reloadData();
                     this.readUIPrep();
                 });
         }

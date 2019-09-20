@@ -4,9 +4,11 @@ from SmartDjango import Excp, Analyse, P, models
 from django.views import View
 
 from Base.auth import Auth
+from Base.common import last_timer, int_or_float, time_dictor
 from Poem.models import PM_CONTENT, PM_TITLE, Poem, PoemError
 
-PM_LAST = P('last').process(int).process(lambda v: v if v else Poem.objects.count() + 1)
+
+PM_LAST = P('last').process(int_or_float).process(last_timer)
 PM_COUNT = P('count').process(int).process(lambda v: min(max(v, 1), 15))
 PM_POEM_ID = P('poem_id', '诗歌ID').process(P.Processor(Poem.get_by_id, yield_name='poem'))
 
@@ -28,7 +30,7 @@ class PoemIDView(View):
     @Excp.handle
     @Analyse.r(a=[PM_POEM_ID], b=[PM_TITLE, PM_CONTENT])
     @Auth.require_login
-    def get(r, poem_id):
+    def put(r, poem_id):
         poem = r.d.poem
 
         if not poem.belong(r.user):
@@ -44,8 +46,9 @@ class BaseView(View):
     @Auth.require_login
     def get(r):
         poems = Poem.objects.filter(user=r.user)
-        page = poems.page(models.Pager(ascend=False), **r.d.dict())
-        return page.dict(object_dictor=Poem.d_list)
+        time_d_pager = models.Pager(ascend=False, compare_field='create_time')
+        page = poems.page(time_d_pager, **r.d.dict())
+        return page.dict(object_dictor=Poem.d_list, next_dictor=time_dictor)
 
     @staticmethod
     @Excp.handle

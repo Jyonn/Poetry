@@ -115,6 +115,7 @@ body div.footer {
   top: unset;
   bottom: 0;
   height: 40px;
+  justify-content: space-between;
 }
 body div.footer div.footer__btn [class^="icon-"],
 body div.footer div.footer__btn [class*=" icon-"] {
