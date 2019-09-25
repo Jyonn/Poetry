@@ -338,6 +338,9 @@ body.night div.center-box div.loading-box div.spinner {
   body div.footer div.footer__btn {
     display: none;
   }
+  body div.footer div.footer__btn {
+    display: inherit;
+  }
   body.day div.page.main-page {
     box-shadow: 0 0 20px #cccccc;
   }
