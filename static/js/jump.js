@@ -6,6 +6,6 @@ class Jump {
         Jump._base_jump('/');
     }
     static oauth() {
-        Jump._base_jump('https://sso.6-79.cn/oauth/?app_id=IOWQrFWGubx9pJLaw2liU67bC6PBRsmv');
+        Jump._base_jump('https://sso.6-79.cn/oauth/?app_id=IOWQrFWG');
     }
 }

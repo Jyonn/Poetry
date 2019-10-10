@@ -1,4 +1,4 @@
-from SmartDjango import Excp, Analyse, P
+from SmartDjango import Analyse, P
 from django.views import View
 
 from Base.auth import Auth
@@ -8,7 +8,6 @@ from Base.common import qt_manager
 
 class OAuthView(View):
     @staticmethod
-    @Excp.handle
     @Analyse.r([P('code', '授权码')])
     def post(r):
         """POST /user/oauth
@@ -28,7 +27,6 @@ class OAuthView(View):
 
 class BaseView(View):
     @staticmethod
-    @Excp.handle
     @Auth.require_login
     def get(r):
         """GET /user/

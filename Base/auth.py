@@ -1,17 +1,15 @@
 from functools import wraps
 
-from SmartDjango import Excp, ErrorCenter, E
+from SmartDjango import Excp, E
 
 from Base.jtoken import JWT
 from User.models import User
 
 
-class AuthError(ErrorCenter):
+@E.register
+class AuthError:
     REQUIRE_LOGIN = E("需要登录", hc=401)
     TOKEN_MISS_PARAM = E("认证口令缺少参数{0}", E.PH_FORMAT, hc=400)
-
-
-AuthError.register()
 
 
 class Auth:

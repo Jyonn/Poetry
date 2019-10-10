@@ -1,22 +1,13 @@
-from SmartDjango import models, Excp, ErrorCenter, E
+from SmartDjango import models, Excp, E
 
 
-class UserError(ErrorCenter):
+@E.register
+class UserError:
     USER_NOT_FOUND = E("不存在的用户", hc=404)
     CREATE_USER = E("新建用户错误", hc=500)
 
 
-UserError.register()
-
-
 class User(models.Model):
-    MAX_L = {
-        'avatar': 1024,
-        'nickname': 10,
-        'qt_user_app_id': 16,
-        'qt_token': 256,
-    }
-
     avatar = models.CharField(
         verbose_name='头像',
         default=None,
@@ -49,7 +40,7 @@ class User(models.Model):
     def get_by_qt_user_app_id(qt_user_app_id):
         try:
             user = User.objects.get(qt_user_app_id=qt_user_app_id)
-        except User.DoesNotExist as err:
+        except User.DoesNotExist:
             return UserError.USER_NOT_FOUND
         return user
 
@@ -88,4 +79,4 @@ class User(models.Model):
         return self.qt_user_app_id
 
     def d(self):
-        return self.dictor(['nickname', 'avatar', 'user_id'])
+        return self.dictor('nickname', 'avatar', 'user_id')

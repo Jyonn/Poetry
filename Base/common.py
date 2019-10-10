@@ -22,7 +22,7 @@ def time_dictor(v):
 def int_or_float(number):
     try:
         number = int(number)
-    except Exception as err:
+    except Exception:
         number = float(number)
     return number
 

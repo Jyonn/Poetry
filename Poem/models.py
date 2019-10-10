@@ -1,16 +1,14 @@
 import datetime
 
-from SmartDjango import ErrorCenter, E, Excp, models
+from SmartDjango import E, Excp, models
 from django.db.models import Q
 
 
-class PoemError(ErrorCenter):
+@E.register
+class PoemError:
     POEM_NOT_FOUND = E("不存在的诗歌")
     CREATE_POEM = E("发布诗歌失败")
     POEM_NOT_BELONG = E("没有查看权限")
-
-
-PoemError.register()
 
 
 class Poem(models.Model):
@@ -87,13 +85,13 @@ class Poem(models.Model):
         return self.create_time.timestamp()
 
     def d_create(self):
-        return self.dictor(['id'])
+        return self.dictor('id')
 
     def d_list(self):
-        return self.dictor(['id', 'title', 'create_time'])
+        return self.dictor('id', 'title', 'create_time')
 
     def d(self):
-        return self.dictor(['title', 'content', 'create_time'])
+        return self.dictor('title', 'content', 'create_time')
 
     """
     修改函数
