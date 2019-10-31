@@ -1,8 +1,7 @@
 import datetime
 
-from SmartDjango import Analyse, models
+from SmartDjango import Analyse, models, P
 from django.views import View
-from smartify import P
 
 from Base.auth import Auth
 from Base.common import last_timer, int_or_float, time_dictor

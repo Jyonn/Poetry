@@ -1,6 +1,5 @@
-from SmartDjango import Analyse
+from SmartDjango import Analyse, P
 from django.views import View
-from smartify import P
 
 from Base.auth import Auth
 from User.models import User

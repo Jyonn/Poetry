@@ -34,7 +34,6 @@ class JWT:
         return encode_str, dict_
 
     @staticmethod
-    @Excp.pack
     def decrypt(str_):
         """
         jwt签名解密
@@ -43,7 +42,7 @@ class JWT:
         try:
             dict_ = jwt.decode(str_, SECRET_KEY, JWT_ENCODE_ALGO)
         except jwt.DecodeError as err:
-            return JWTError.ERROR_JWT_FORMAT(debug_message=str(err))
+            raise JWTError.ERROR_JWT_FORMAT(debug_message=str(err))
         if 'expire' not in dict_.keys() \
                 or 'ctime' not in dict_.keys() \
                 or not isinstance(dict_['ctime'], float) \
