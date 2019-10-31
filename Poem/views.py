@@ -1,7 +1,8 @@
 import datetime
 
-from SmartDjango import Analyse, P, models
+from SmartDjango import Analyse, models
 from django.views import View
+from smartify import P
 
 from Base.auth import Auth
 from Base.common import last_timer, int_or_float, time_dictor
@@ -21,7 +22,7 @@ class PoemIDView(View):
         poem = r.d.poem
 
         if not poem.belong(r.user):
-            return PoemError.POEM_NOT_BELONG
+            raise PoemError.POEM_NOT_BELONG
 
         return poem.d()
 
@@ -32,7 +33,7 @@ class PoemIDView(View):
         poem = r.d.poem
 
         if not poem.belong(r.user):
-            return PoemError.POEM_NOT_BELONG
+            raise PoemError.POEM_NOT_BELONG
 
         poem.update(**r.d.dict('title', 'content'))
 
@@ -66,7 +67,7 @@ class SearchView(View):
 
 class SummaryView(View):
     @staticmethod
-    def get(r):
+    def get(_):
         crt_date = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         objects = Poem.objects.filter(create_time__gte=crt_date)
         today_count = objects.count()

@@ -1,14 +1,14 @@
 import datetime
 
-from SmartDjango import E, Excp, models
+from SmartDjango import E, models, Hc
 from django.db.models import Q
 
 
-@E.register
+@E.register()
 class PoemError:
-    POEM_NOT_FOUND = E("不存在的诗歌")
-    CREATE_POEM = E("发布诗歌失败")
-    POEM_NOT_BELONG = E("没有查看权限")
+    POEM_NOT_FOUND = E("不存在的诗歌", Hc.NotFound)
+    CREATE_POEM = E("发布诗歌失败", Hc.InternalServerError)
+    POEM_NOT_BELONG = E("没有查看权限", Hc.Unauthorized)
 
 
 class Poem(models.Model):
@@ -34,7 +34,6 @@ class Poem(models.Model):
     )
 
     @classmethod
-    @Excp.pack
     def create(cls, title, content, user):
         crt_time = datetime.datetime.now()
 
@@ -46,22 +45,20 @@ class Poem(models.Model):
                 create_time=crt_time,
             )
             poem.save()
+            return poem
         except Exception as err:
-            return PoemError.CREATE_POEM
-        return poem
+            raise PoemError.CREATE_POEM(debug_message=err)
 
     """
     查询函数
     """
 
     @classmethod
-    @Excp.pack
     def get_by_id(cls, poem_id):
         try:
-            poem = cls.objects.get(pk=poem_id)
+            return cls.objects.get(pk=poem_id)
         except cls.DoesNotExist:
-            return PoemError.POEM_NOT_FOUND
-        return poem
+            raise PoemError.POEM_NOT_FOUND
 
     def belong(self, user):
         return self.user == user
