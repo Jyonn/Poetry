@@ -1,6 +1,6 @@
 from functools import wraps
 
-from SmartDjango import E, HttpCode as Hc
+from SmartDjango import E, Hc
 
 from Base.jtoken import JWT
 from User.models import User

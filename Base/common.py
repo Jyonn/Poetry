@@ -1,11 +1,11 @@
 import datetime
 
 from QitianSDK import QitianManager
-from SmartDjango import Excp
+from SmartDjango import NetPacker
 
 from Config.models import Config, CI
 
-Excp.debugging(off=True)
+NetPacker.set_mode(debug=False)
 
 QITIAN_APP_ID = Config.get_value_by_key(CI.QITIAN_APP_ID)
 QITIAN_APP_SECRET = Config.get_value_by_key(CI.QITIAN_APP_SECRET)

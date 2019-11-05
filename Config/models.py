@@ -1,4 +1,4 @@
-from SmartDjango import models, Excp, E, HttpCode as Hc
+from SmartDjango import models, E, Hc
 
 
 @E.register()
@@ -29,7 +29,7 @@ class Config(models.Model):
         try:
             return cls.objects.get(key=key)
         except cls.DoesNotExist as err:
-            raise ConfigError.CONFIG_NOT_FOUND
+            raise ConfigError.CONFIG_NOT_FOUND(debug_message=err)
 
     @classmethod
     def get_value_by_key(cls, key, default=None):
@@ -55,9 +55,11 @@ class Config(models.Model):
                     )
                     config.save()
                 except Exception as err:
-                    raise ConfigError.CREATE_CONFIG(debug_message=str(err))
+                    raise ConfigError.CREATE_CONFIG(debug_message=err)
             else:
-                raise ConfigError.CREATE_CONFIG
+                raise e
+        except Exception as err:
+            ConfigError.CREATE_CONFIG(debug_message=err)
 
 
 class ConfigInstance:
