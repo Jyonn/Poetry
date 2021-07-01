@@ -44,8 +44,6 @@ class User(models.Model):
 
     @classmethod
     def create(cls, qt_user_app_id, qt_token):
-        cls.validator(locals())
-
         try:
             user = cls.get_by_qt_user_app_id(qt_user_app_id)
             user.qt_token = qt_token
@@ -73,8 +71,5 @@ class User(models.Model):
         self.nickname = data['nickname']
         self.save()
 
-    def _readable_user_id(self):
-        return self.qt_user_app_id
-
     def d(self):
-        return self.dictor('nickname', 'avatar', 'user_id')
+        return self.dictor('nickname', 'avatar', 'qt_user_app_id->user_id')

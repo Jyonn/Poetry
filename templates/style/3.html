@@ -1,0 +1,19 @@
+{% load static %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>{{ work_info.work_name }} - {{ work_info.writer_name }}</title>
+    <link href="{% static "css/work-style.css" %}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="https://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
+</head>
+<body class="work-style-3-body">
+    <div class="work-style-3-name">{{ work_info.work_name }}</div>
+    <pre class="work-style-3-content">{{ work_info.content }}</pre>
+    <div class="work-style-3-writer">{{ work_info.writer_name }}</div>
+    <div class="work-style-3-time">{{ work_info.date_chinese }}</div>
+    <script type="text/javascript">
+       $youziku.load(".work-style-3-content,.work-style-3-writer,.work-style-3-time", "10ee012e73534b93ba2b52850825620a", "HanWangFangSongMedium");
+       $youziku.load(".work-style-3-name", "10ee012e73534b93ba2b52850825620a", "HanWangFangSongMedium");
+       $youziku.draw();
+    </script>
+</body>

@@ -75,17 +75,14 @@ class Poem(models.Model):
     字典函数
     """
 
-    def _readable_id(self):
-        return self.pk
-
     def _readable_create_time(self):
         return self.create_time.timestamp()
 
     def d_create(self):
-        return self.dictor('id')
+        return self.dictor('pk->id')
 
     def d_list(self):
-        return self.dictor('id', 'title', 'create_time')
+        return self.dictor('pk->id', 'title', 'create_time')
 
     def d(self):
         return self.dictor('title', 'content', 'create_time')

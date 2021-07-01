@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main %}
+<div class="page main-page work-style-1-body">
+    <div class="work-style-1-name">{{ work_info.work_name }}</div>
+    <div class="work-style-1-info">By {{ work_info.writer_name }} {{ work_info.date_normal }}</div>
+    <pre class="work-style-1-content">{{ work_info.content }}</pre>
+    <script type="text/javascript">
+       $youziku.load(".work-style-1-info", "03e7a2705e504e28aa41ecbb5bf1ce94", "hdjshusonger");
+       $youziku.load(".work-style-1-content", "03e7a2705e504e28aa41ecbb5bf1ce94", "hdjshusonger");
+       $youziku.load(".work-style-1-name", "787b261f7932497b8459e72b9e93a2f1", "DFGMincho-SU");
+       $youziku.draw();
+    </script>
+</div>
+{% endblock %}
