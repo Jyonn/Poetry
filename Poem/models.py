@@ -4,11 +4,11 @@ from SmartDjango import E, models, Hc
 from django.db.models import Q
 
 
-@E.register()
+@E.register(id_processor=E.idp_cls_prefix())
 class PoemError:
-    POEM_NOT_FOUND = E("不存在的诗歌", Hc.NotFound)
-    CREATE_POEM = E("发布诗歌失败", Hc.InternalServerError)
-    POEM_NOT_BELONG = E("没有查看权限", Hc.Unauthorized)
+    POEM_NOT_FOUND = E("不存在的诗歌", hc=Hc.NotFound)
+    CREATE_POEM = E("发布诗歌失败", hc=Hc.InternalServerError)
+    POEM_NOT_BELONG = E("没有查看权限", hc=Hc.Unauthorized)
 
 
 class Poem(models.Model):
@@ -79,13 +79,13 @@ class Poem(models.Model):
         return self.create_time.timestamp()
 
     def d_create(self):
-        return self.dictor('pk->id')
+        return self.dictify('pk->id')
 
     def d_list(self):
-        return self.dictor('pk->id', 'title', 'create_time')
+        return self.dictify('pk->id', 'title', 'create_time')
 
     def d(self):
-        return self.dictor('title', 'content', 'create_time')
+        return self.dictify('title', 'content', 'create_time')
 
     """
     修改函数

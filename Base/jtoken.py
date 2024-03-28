@@ -7,14 +7,14 @@ import datetime
 import jwt
 
 from Base.common import SECRET_KEY, JWT_ENCODE_ALGO
-from SmartDjango import E
+from SmartDjango import E, Hc
 
 
-@E.register()
+@E.register(id_processor=E.idp_cls_prefix())
 class JWTError:
-    JWT_EXPIRED = E("认证过期", hc=401)
-    ERROR_JWT_FORMAT = E("错误的认证格式", hc=400)
-    JWT_PARAM_INCOMPLETE = E("认证参数不完整", hc=400)
+    JWT_EXPIRED = E("认证过期", hc=Hc.Unauthorized)
+    ERROR_JWT_FORMAT = E("错误的认证格式", hc=Hc.BadRequest)
+    JWT_PARAM_INCOMPLETE = E("认证参数不完整", hc=Hc.BadRequest)
 
 
 class JWT:
