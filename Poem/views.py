@@ -10,7 +10,7 @@ from Poem.models import PM_CONTENT, PM_TITLE, Poem, PoemError
 
 
 PM_LAST = P('last').process(int_or_float).process(last_timer)
-PM_COUNT = P('count').process(int).process(lambda v: min(max(v, 1), 15))
+PM_COUNT = P('count').process(int).process(lambda v: min(max(v, 1), 50))
 PM_POEM_ID = P('poem_id', '诗歌ID', 'poem').process(Poem.get_by_id)
 
 
