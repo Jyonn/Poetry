@@ -10,7 +10,7 @@ class IndexComponent {
 
     loadData() {
         this.indexBox.innerHTML = '';
-        this.pager = new Pager({count: 10, api: '/api/poem/'});
+        this.pager = new Pager({count: 30, api: '/api/poem/'});
         this.pager.next(this.display.bind(this));
         Request.get('/api/user/')
             .then(resp => {
