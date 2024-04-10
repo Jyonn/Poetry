@@ -2,6 +2,7 @@ import datetime
 
 from SmartDjango import Analyse, models, P
 from django.views import View
+from oba import Obj
 
 from Base.auth import Auth
 from Base.common import last_timer, int_or_float, time_dictor
@@ -44,14 +45,14 @@ class BaseView(View):
     def get(r):
         poems = Poem.objects.filter(user=r.user)
         time_d_pager = models.Pager(ascend=False, compare_field='create_time')
-        page = poems.page(time_d_pager, **r.d.dict())
+        page = poems.page(time_d_pager, **Obj.raw(r.d))
         return page.dict(object_dictor=Poem.d_list, next_dictor=time_dictor)
 
     @staticmethod
     @Analyse.r(b=[PM_TITLE, PM_CONTENT])
     @Auth.require_login
     def post(r):
-        poem = Poem.create(user=r.user, **r.d.dict())
+        poem = Poem.create(user=r.user, **Obj.raw(r.d))
         return poem.d_create()
 
 
